@@ -1,0 +1,34 @@
+package service;
+
+import dao.BoardDAO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import model.BoardBean;
+
+public class BoardAddAction implements Action{
+
+	@Override
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("BoardAddAction");
+		
+		request.setCharacterEncoding("utf-8");
+		
+		BoardBean board = new BoardBean();
+		board.setBoard_name(request.getParameter("board_name"));
+		board.setBoard_pass(request.getParameter("board_pass"));
+		board.setBoard_subject(request.getParameter("board_subject"));
+		board.setBoard_content(request.getParameter("board_content"));
+		
+		BoardDAO dao = BoardDAO.getInstance();
+		int result = dao.insert(board);			// 원문 글작성
+		if(result == 1)	System.out.println("글작성 성공");
+		
+		ActionForward forward = new ActionForward();
+		forward.setRedirect(true);
+		forward.setPath("./BoardListAction.do");
+		
+		return forward;
+	}
+
+}
