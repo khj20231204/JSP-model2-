@@ -11,8 +11,15 @@
 </head>
 <body>
 
-<form action="<%=request.getContextPath() %>/BoardAddAction.do" method="post">
+<form action="<%=request.getContextPath() %>/BoardReply.do" method="post">
+<input type="hidden" name="board_num" value="${board.board_num}">
+<input type="hidden" name="page" value="${page}">
+<input type="hidden" name="board_re_ref" value="${board.board_re_ref}">
+<input type="hidden" name="board_re_lev" value="${board.board_re_lev}">
+<input type="hidden" name="board_re_seq" value="${board.board_re_seq}">
+
 <table cellpadding="0" cellspacing="0" align=center border=1>
+	<caption><h3>댓글 게시판</h3></caption>
 	<tr align="center" valign="middle">
 		<td colspan="5">MVC 게시판</td>
 	</tr>
@@ -37,7 +44,8 @@
 			<div align="center">제 목</div>
 		</td>
 		<td>
-			<input type="text" name="board_subject" id="board_subject" size="50" maxlength="100"> 
+			<input type="text" name="board_subject" id="board_subject" size="50" maxlength="100"
+				value="re.${board.board_subject}"> 
 		</td>
 	</tr>
 	<tr>
@@ -55,9 +63,7 @@
 	<tr><td colspan="2">&nbsp;</td></tr>
 	<tr align="center" valign="middle">
 		<td colspan="5">			
-			
-			<input type=submit value="등록">
-			
+			<input type=submit value="댓글">			
 			<input type=reset value="취소">
 		</td>
 	</tr>

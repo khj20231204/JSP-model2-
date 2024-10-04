@@ -11,8 +11,12 @@
 </head>
 <body>
 
-<form action="<%=request.getContextPath() %>/BoardAddAction.do" method="post">
+<form action="<%=request.getContextPath() %>/BoardModify.do" method="post">
+<input type="hidden" name="board_num" value="${board.board_num}">
+<input type="hidden" name="page" value="${page}">
+
 <table cellpadding="0" cellspacing="0" align=center border=1>
+	<caption><h3>글수정</h3></caption>
 	<tr align="center" valign="middle">
 		<td colspan="5">MVC 게시판</td>
 	</tr>
@@ -21,7 +25,8 @@
 			<div align="center">작성자</div>
 		</td>
 		<td>
-			<input type="text" name="board_name" id="board_name" size="10" maxlength="10">
+			<input type="text" name="board_name" id="board_name" size="10" 
+				maxlength="10" value="${board.board_name }">
 		</td>
 	</tr>
 	<tr>
@@ -37,7 +42,8 @@
 			<div align="center">제 목</div>
 		</td>
 		<td>
-			<input type="text" name="board_subject" id="board_subject" size="50" maxlength="100"> 
+			<input type="text" name="board_subject" id="board_subject" size="50" 
+					maxlength="100" value="${board.board_subject }"> 
 		</td>
 	</tr>
 	<tr>
@@ -45,7 +51,7 @@
 			<div align="center">내 용</div>
 		</td>
 		<td>
-			<textarea name="board_content" id="board_content" cols="67" rows="15"></textarea>
+			<textarea name="board_content" id="board_content" cols="67" rows="15">${board.board_content}</textarea>
 		</td>
 	</tr>	
 	<tr bgcolor="cccccc">
@@ -54,10 +60,8 @@
 	</tr>
 	<tr><td colspan="2">&nbsp;</td></tr>
 	<tr align="center" valign="middle">
-		<td colspan="5">			
-			
-			<input type=submit value="등록">
-			
+		<td colspan="5">
+			<input type=submit value="수정">
 			<input type=reset value="취소">
 		</td>
 	</tr>
