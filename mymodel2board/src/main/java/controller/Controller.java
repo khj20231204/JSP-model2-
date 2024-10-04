@@ -1,35 +1,65 @@
 package controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import service.Action;
+import service.ActionForward;
+import service.BoardAddAction;
+
 import java.io.IOException;
+
+import org.apache.catalina.connector.Request;
 
 @WebServlet("*.do") //do 확장자는 모두 이쪽으로
 public class Controller extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String requestURI = request.getRequestURI(); //전체 URI를 가져온다
 		String contextPath = request.getContextPath(); //현재 프로제트명을 가져온다.
-		String command = requestURI.substring(0)
+		String command = requestURI.substring(contextPath.length());
 		
+		System.out.println(requestURI);  //mymodel2board/LoginForm.do
+		System.out.println(contextPath); //mymodel2board
+		System.out.println(command); 	 //LoginForm.do
+		
+		Action action = null;
+		ActionForward forward = null;
+		
+		//글작성(원문 작성)
+		if(command.equals("/BoardAddAction.do")) {
+			try {
+				action = new BoardAddAction();
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//포워딩 처리
+		if(forward != null) {
+			if(forward.isRedirect()) { //redirect 방식으로 포워딩
+				response.sendRedirect(forward.getPath());
+			}else {
+				RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getPath());
+				dispatcher.forward(request, response);
+			}
+		}
 	}
 
 	//링크를 걸거나 location이동
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("doGet");
-		
 		doProcess(request, response);
 	}
 
 	//form을 통해 전송 시
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("doPost");
-		
 		doProcess(request, response);
 	}
 
