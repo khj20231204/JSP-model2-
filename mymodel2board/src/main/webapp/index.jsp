@@ -8,10 +8,10 @@
 </head>
 <body>
 
-모델2 회원관리
+모델2 게시판
 
 <script>
-	location.href="./LoginForm.do";
+	location.href="./BoardListAction.do";
 </script>
 
 

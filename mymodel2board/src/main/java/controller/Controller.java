@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import service.Action;
 import service.ActionForward;
 import service.BoardAddAction;
+import service.BoardListAction;
 
 import java.io.IOException;
 
@@ -34,6 +35,26 @@ public class Controller extends HttpServlet {
 		if(command.equals("/BoardAddAction.do")) {
 			try {
 				action = new BoardAddAction();
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+
+		//글작성
+		}else if(command.equals("/BoardForm.do")){
+			try {
+				forward = new ActionForward();
+				forward.setRedirect(false);
+				forward.setPath("./board/board_write.jsp");
+				//db연동만 service객체가 필요, 지금은 바로 글작성 폼으로 이동하기 때문에 바로 jsp로 이동
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		
+		//글목록
+		}else if(command.equals("/BoardListAction.do")){
+			try{
+				action = new BoardListAction();
 				forward = action.execute(request, response);
 			}catch(Exception e) {
 				e.printStackTrace();

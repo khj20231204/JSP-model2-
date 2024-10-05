@@ -24,3 +24,7 @@ create sequence model2board_seq
 start with 1
 increment by 1
 nocache;
+
+select * from model2board;
+
+commit;
